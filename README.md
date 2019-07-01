@@ -1,10 +1,13 @@
-This project was bootstrapped with create react app. It basically is me trying out Gestalt (UI components), the card component, and updating a parent component through a child component (which is what happens when you click bio). I put it together as this make believe team, with four cards.
+This project was bootstrapped with create react app. It uses Gestalt (UI components), the card component, and updates a parent component through a child component (which is what happens when you click the chat text). It's basically a remixed version of the card app I did.
 
 ## Comments
 
-It was very smooth sailing until I tried to pass a function as an argument to the child, and then have the child execute it, with an argument: surprisingly difficult. This is the onClicked argument, now working.
+It's not very adventurous, and most of my time was spent tweaking variables sent to components in Gestalt.
 
 ### Ideas for Improvement
 
-It could be put into UI containers; it could be made to work with other Gestalt components.
+You could make the chat UI look better, or do something cooler with another state variable.
+
+Or, to give more of a game sense, you could have the person choose between chat options - right now they have only one, the one in red text.
+
 

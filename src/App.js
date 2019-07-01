@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Card, Box, Avatar, Text, Link, Button } from 'gestalt';
 import 'gestalt/dist/gestalt.css';
+import styled from 'styled-components'
 
 class CardTeam extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class CardTeam extends Component {
   }
 
   onClick = (e) => {
-    this.props.onClicked(this.props.text)
+    this.props.onClicked(this.props.index)
   }
     
     render() {
@@ -46,7 +47,7 @@ class CardTeam extends Component {
           <Button
         accessibilityLabel={this.props.name}
         color="red"
-	text="Bio"
+	text={this.props.yousay}
 	onClick={this.onClick}
 	
           />
@@ -56,41 +57,63 @@ class CardTeam extends Component {
   }
 }
 
+const ChatRow = (props) => {
+  var r=[]
+  var cstyle = {
+      color: "white",
+  }
+    if (props.sayings.length<=props.index) {
+	r.push(<Box color='darkGray' paddingX={1} shape='pill' margin={5} alignItems='center' 
+justifyContent='center'><p style={cstyle}>This person has left the chat.</p></Box>)
+    }
+    else {
+	r.push(<Box color="blue" paddingX={10} shape="pill" margin={5} alignItems="center" justifyContent="center"><p style={cstyle}>{props.sayings[props.index]}</p></Box>)
+    }
+    return <div>{r}</div>
+}
 
 class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-	  bio: "Our VC-backed team is destined to bring about the end of days, according to experts."
+	  bio: "Come speak your mind!",
+	  index: 0
       };
     this.onUpdate = this.onUpdate.bind(this);      
   }
 
   onUpdate = (data) => {
       this.setState({
-	  bio: data
+	  index: this.state.index+1
       })
   };
 
-  render() {
-  return (
+    render() {
+	const youwords=["hi there","hows it going", "whats ur hobby?", "no way","wait, don't leave!","please stay","come back!","hello?","lets do it again!"]
+	var youtext = youwords.map(item=> item.toUpperCase());
+	const head1=["sitting alone at a party rn","hey hey heyyyy!","pretty good","i come on here to chat","its true","i could use a drink right about now","will the last person to leave please turn out the lights"]
+	const head2=["wheres the party","aloha","follow me on insta","this is boring","i'm out...",]
+	const head3=["not playing anymore. it's all cheaters","sup bro","can't complain... unless you're talking about the game","i play on twitch for cash","gotta go, got games to play",]
+	const head4=["controversial opinion: pepsi > coke","<tips hat> greetings","it goes, my friend; it goes","i act in movies","before you ask: i'm not telling which ones", "my parting words of wisdom: never quit, never surrender"]
+	if (this.state.index >= youtext.length) { this.setState({ index: 0 }) } 
+	return (
 	  <div className="App">
-	  <div><h1>Meet the Team!</h1></div>
-	  <p>{this.state.bio}</p>
+	  <div><h1>Party Chat</h1></div>
+		<ChatRow sayings={head1} index={this.state.index}/>
+		<ChatRow sayings={head2} index={this.state.index}/>
+		<ChatRow sayings={head3} index={this.state.index}/>
+		<ChatRow sayings={head4} index={this.state.index}/>				
 	  <Box 
-      alignItems="center"
-      justifyContent="center"
-      direction="row"
-      display="flex"
+	    alignItems="center"
+	    justifyContent="center"
+	    direction="row"
+	    display="flex"
       
-      marginStart={-1}
-      marginEnd={-1}
-	  >    
-	  <CardTeam onClicked={this.onUpdate} text="Death, in the end, claims everyone." name="Death" source="death.png" />
-	  <CardTeam onClicked={this.onUpdate} text="Famine afflicts our world to this day." name="Famine" source="famine.png" />
-	  <CardTeam onClicked={this.onUpdate} text="War is hell." name="War" source="war.png" />
-	  <CardTeam onClicked={this.onUpdate} text="Pestilence has caused the collapse of nations and civilizations." name="Pestilence" source="conquest.png" />
-	  </Box>
+	    marginStart={-1}
+	    marginEnd={-1}
+		>
+		<CardTeam yousay={youtext[this.state.index]} onClicked={this.onUpdate} name="" source="lol.gif" />
+	</Box>
 
     </div>
   );
